@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import time, threading
 import BotPy as BP
 
+
 FileFirstList = "FirstList.txt"
 ListFirstInfo = list()
 ListFirstTitle = list()

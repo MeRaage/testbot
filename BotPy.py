@@ -8,6 +8,7 @@ userid=344017358
 sendbool = False
 global Timebool
 global textinfo
+FILENAME = "Users.txt"
 ListUsers=list()
 bot = telebot.TeleBot('590740321:AAGkPd-AWnYNuy16T-34sP4iHzXF55U0pbc');
 ListCommand = [
@@ -16,19 +17,47 @@ ListCommand = [
 ]
 
 
-def SendInfo():
-        bot.send_message(344017358,"Hello",disable_web_page_preview=True)
+def ReadUsers():
+    print("@start-ReadUsers")
+    try:
+        with open(FILENAME,"r",encoding="utf8")as file:
+            line = file.readline()
+            while line:
+                ListUsers.append(line[:-1])
+                line = file.readline()
+    except Exception as e :
+        print("read error",e)
+    print("@end-ReadUsers")
+def WriteUsers(_userid):
+    print("@start-WriteUsers")
+    try:
+        with open(FILENAME,"a",encoding="utf8")as file:
+                file.write(_userid)
+                file.write('\n')
+    except Exception as e :
+        print("write error:",e)
+    print("@end-WriteUsers")
 
 
 @bot.message_handler(commands=['help','start'])
 def get_text_messages2(message):
     if message.text =='/start':
-        bot.send_message(message.from_user.id, "Спасибо за регистрацию вы получите уведомление о новых сериях!!!")
+        ReadUsers()
+        if message.from_user.id in ListUsers:
+            bot.send_message(message.from_user.id, "Вы уже зарегистрирывались!!!")
+        else :
+            WriteUsers(message.from_user.id)
+            bot.send_message(message.from_user.id, "Спасибо за регистрацию вы получите уведомление о новых сериях!!!")
     #if message.text =='/help':
     #    bot.send_message(message.from_user.id, AllCommand())
 
 def SendInfo(item):
-    bot.send_message(344017358, item)
+    ReadUsers()
+    for user in ListUsers:
+        bot.send_message(int(user), item)
+
+
+
 #import threading
 
 #def writer(x, event_for_wait, event_for_set):
