@@ -32,7 +32,7 @@ def WriteUsers(_userid):
     print("@start-WriteUsers")
     try:
         with open(FILENAME,"a",encoding="utf8")as file:
-                file.write(_userid)
+                file.write(str(_userid))
                 file.write('\n')
     except Exception as e :
         print("write error:",e)
@@ -43,7 +43,7 @@ def WriteUsers(_userid):
 def get_text_messages2(message):
     if message.text =='/start':
         ReadUsers()
-        if message.from_user.id in ListUsers:
+        if str(message.from_user.id) in ListUsers:
             bot.send_message(message.from_user.id, "Вы уже зарегистрирывались!!!")
         else :
             WriteUsers(message.from_user.id)
