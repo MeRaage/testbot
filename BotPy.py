@@ -22,6 +22,7 @@ def ReadUsers():
     try:
         with open(FILENAME,"r",encoding="utf8")as file:
             line = file.readline()
+            ListUsers= list()
             while line:
                 ListUsers.append(line[:-1])
                 line = file.readline()
