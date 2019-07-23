@@ -1,2 +1,2 @@
 worker python sendbot.py
-worker python BotPy.py
+worker2 python BotPy.py
